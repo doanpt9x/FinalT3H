@@ -18,11 +18,11 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/iv_avata"
+                android:id="@+id/iv_avatar"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:padding="15dp"
-                android:src="@drawable/icon_avata_red" />
+                android:src="@drawable/icon_avatar_red" />
 
             <TextView
                 android:id="@+id/tv_name"
@@ -174,9 +174,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="center_vertical"
-                android:text="@string/my_acount"
-
-                android:textSize="20dp" />
+                android:text="@string/my_account"
+                android:textSize="22dp" />
         </TableRow>
 
         <TableRow

@@ -105,10 +105,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.tr_power:
                 //event click log out into Menu
-
                 break;
-
-
         }
     }
 }

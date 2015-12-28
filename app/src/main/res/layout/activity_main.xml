@@ -19,7 +19,7 @@
             <include
                 layout="@layout/item_top_activity"
                 android:layout_width="match_parent"
-                android:layout_height="80dp" />
+                android:layout_height="60dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
