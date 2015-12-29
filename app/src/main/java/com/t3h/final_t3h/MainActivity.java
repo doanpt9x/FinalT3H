@@ -12,6 +12,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.t3h.messageofline.ActivityNewMessage;
+import com.t3h.messageofline.DatabaseManager;
+import com.t3h.messageofline.MessageAdapter;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     private DrawerLayout mDrlMenu;
@@ -31,6 +33,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private TableRow mTrLogOut;
     private TableRow mTrMessageOnline;
 
+    private DatabaseManager mDatabaseSMS;
+    private MessageAdapter mMessageAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +48,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mLvMessage = (ListView) findViewById(R.id.lv_message);
         mIvMenu = (ImageView) findViewById(R.id.iv_menu);
         mIvPlus = (ImageView) findViewById(R.id.iv_plus);
-
+        mIvAvata = (ImageView) findViewById(R.id.iv_avatar);
 
         mTvName = (TextView) findViewById(R.id.tv_name);
         mTvEmail = (TextView) findViewById(R.id.tv_email);
@@ -54,6 +59,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mTrMyAcount = (TableRow) findViewById(R.id.tr_acount);
         mTrSetting = (TableRow) findViewById(R.id.tr_setting);
         mTrLogOut = (TableRow) findViewById(R.id.tr_power);
+
+        mMessageAdapter = new MessageAdapter(this);
+
+
+        mDatabaseSMS = new DatabaseManager(this);
+        mDatabaseSMS.getAddress();
+        mDatabaseSMS.showInfoAddress();
+
 
         mTrMessageOnline.setOnClickListener(this);
         mTrCallLog.setOnClickListener(this);
@@ -108,4 +121,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
         }
     }
+
+
 }
