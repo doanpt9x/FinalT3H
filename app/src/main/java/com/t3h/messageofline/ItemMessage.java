@@ -12,6 +12,7 @@ public class ItemMessage {
     private String read;
     private String name;
     private String snippet;
+    private String date;
 
 
     public ItemMessage(String mId, String mAddress, String name) {
@@ -20,13 +21,20 @@ public class ItemMessage {
         this.name = name;
     }
 
-    public ItemMessage(String mId, String mTime, String snippet, String read, String mType) {
-        this.mId = mId;
-        this.mTime = mTime;
-        this.snippet = snippet;
-        this.read = read;
-        this.mType = mType;
+    public ItemMessage(String mID,String mAddress,String body,String date,String numberMesage){
+        this.mId = mID;
+        this.mBody = body;
+        this.mAddress = mAddress;
+        this.date=date;
+        this.read=numberMesage;
     }
+//    public ItemMessage(String mId, String mTime, String snippet, String read, String mType) {
+//        this.mId = mId;
+//        this.mTime = mTime;
+//        this.snippet = snippet;
+//        this.read = read;
+//        this.mType = mType;
+//    }
 
     public ItemMessage(String mBody, String mType) {
         this.mBody = mBody;

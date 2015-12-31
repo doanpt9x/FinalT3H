@@ -50,15 +50,12 @@ public class MessageAdapter extends BaseAdapter {
         if (view == null) {
             viewHolder = new ViewHolder();
             view = mInflater.inflate(R.layout.item_message_offline, null);
-
             viewHolder.mAddress = (TextView) view.findViewById(R.id.tv_address);
             viewHolder.mBody = (TextView) view.findViewById(R.id.tv_body);
             viewHolder.mTime = (TextView) view.findViewById(R.id.tv_time);
             viewHolder.mRead = (TextView) view.findViewById(R.id.tv_message_read);
             view.setTag(viewHolder);
-
         } else {
-
             viewHolder = (ViewHolder) view.getTag();
         }
         TextView mAddress = (TextView) view.findViewById(R.id.tv_address);
@@ -68,14 +65,13 @@ public class MessageAdapter extends BaseAdapter {
         mAddress.setText(mArrayMessages.get(position).getmAddress());
         mBody.setText(mArrayMessages.get(position).getmBody());
         mTime.setText(mArrayMessages.get(position).getmTime());
-        if (Integer.parseInt(mArrayMessages.get(position).getRead()) == 0) {
-            mRead.setVisibility(View.GONE);
-        } else {
-            mRead.setVisibility(View.VISIBLE);
-            mRead.setText(mArrayMessages.get(position).getRead());
-        }
-
-
+        mRead.setText(mArrayMessages.get(position).getRead());
+//        if (Integer.parseInt(mArrayMessages.get(position).getRead()) == 0) {
+//            mRead.setVisibility(View.GONE);
+//        } else {
+//            mRead.setVisibility(View.VISIBLE);
+//            mRead.setText(mArrayMessages.get(position).getRead());
+//        }
         return view;
     }
 
@@ -84,6 +80,5 @@ public class MessageAdapter extends BaseAdapter {
         TextView mBody;
         TextView mTime;
         TextView mRead;
-
     }
 }
