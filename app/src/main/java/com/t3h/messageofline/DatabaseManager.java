@@ -1,11 +1,15 @@
 package com.t3h.messageofline;
 
+import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.provider.BaseColumns;
+import android.provider.Telephony;
 import android.util.Log;
 
 import java.io.File;
@@ -21,7 +25,6 @@ import java.util.Date;
  */
 public class DatabaseManager {
 
-
     private SQLiteDatabase mSQLdata;
     private static final String DATA_BASE_PATH = Environment.getDataDirectory().getPath() + "/data/com.t3h.final_t3h/databases";
     private static final String DATA_MESSAGE = "MessageOffline.sqlite";
@@ -36,8 +39,7 @@ public class DatabaseManager {
     public static final String COLUMN_SNIPPET = "snippet";
     public static final String COLUMN_READ = "read";
     public static final String COLUMN_TYPE = "x_sub_msg_type";
-
-
+    public static final String COLUMN_MESSAGE_COUNT = "message_count";
     private Context context;
 
     private ArrayList<ItemMessage> mArrayAddress = new ArrayList<>();
@@ -45,6 +47,10 @@ public class DatabaseManager {
     public DatabaseManager(Context context) {
         this.context = context;
         copyDatabase();
+    }
+
+    public ArrayList<ItemMessage> getmArrayAddress() {
+        return mArrayAddress;
     }
 
     private void copyDatabase() {
@@ -83,9 +89,7 @@ public class DatabaseManager {
         Log.i(TAG, "size:" + mArrayAddress.size());
         for (int i = 0; i < mArrayAddress.size(); i++) {
             Log.i(TAG, "id:" + mArrayAddress.get(i).getmId() + " address: " + mArrayAddress.get(i).getmAddress() + " name:" + mArrayAddress.get(i).getName()
-
             );
-
         }
     }
 
@@ -97,32 +101,42 @@ public class DatabaseManager {
 
 
     public void getAddress() {
-
         Uri message = Uri.parse("content://mms-sms/canonical-addresses");
         ContentResolver cr = context.getContentResolver();
         Cursor c = cr.query(message, new String[]{"date"}, null, null, null);
         c.moveToFirst();
         while (c.isAfterLast() == false) {
             String id = c.getString(c.getColumnIndex(COLUMN_ID));
-
             String address = c.getString(c.getColumnIndex(COLUMN_ADDRESS));
-            String name = c.getString(c.getColumnIndex(COLUMN_NAME));
-
-
+            //String name = c.getString(c.getColumnIndex(COLUMN_NAME));
+            String name="";
             mArrayAddress.add(new ItemMessage(id, address, name));
             c.moveToNext();
         }
         c.close();
-
     }
-
-
+    public void getThreadID(){
+       // Uri uri=Uri.withAppendedPath();
+        Uri message = Uri.parse("content://mms-sms/threads");
+        ContentResolver cr = context.getContentResolver();
+        Cursor c = cr.query(message, new String[]{"*"}, null, null, null);
+        c.moveToFirst();
+        while (c.isAfterLast() == false) {
+            String id = c.getString(c.getColumnIndex(COLUMN_ID));
+            String body = c.getString(c.getColumnIndex(COLUMN_SNIPPET));
+            String address = c.getString(c.getColumnIndex(COLUMN_SNIPPET));
+            String numberMessage=c.getString(c.getColumnIndex(COLUMN_MESSAGE_COUNT));
+            String date=fomatTime(c.getString(c.getColumnIndex(COLUMN_DATE)));
+            mArrayAddress.add(new ItemMessage(id,address,body,date,numberMessage));
+            c.moveToNext();
+        }
+        c.close();
+    }
     public String fomatTime(String time) {
         long dateLong = Long.parseLong(time + "");
         Date dateModified = new Date(dateLong);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy" + " | " + "HH:mm");
         String formattedDateString = formatter.format(dateModified);
-
         return formattedDateString;
     }
 }

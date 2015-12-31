@@ -61,25 +61,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mTrLogOut = (TableRow) findViewById(R.id.tr_power);
 
         mMessageAdapter = new MessageAdapter(this);
-
-
         mDatabaseSMS = new DatabaseManager(this);
-        mDatabaseSMS.getAddress();
+        mDatabaseSMS.getThreadID();
         mDatabaseSMS.showInfoAddress();
-
-
+        mMessageAdapter.setmArrayMessages(mDatabaseSMS.getmArrayAddress());
+        mLvMessage.setAdapter(mMessageAdapter);
         mTrMessageOnline.setOnClickListener(this);
         mTrCallLog.setOnClickListener(this);
         mTrMyAcount.setOnClickListener(this);
         mTrAboutUs.setOnClickListener(this);
         mTrSetting.setOnClickListener(this);
         mTrLogOut.setOnClickListener(this);
-
-
         mIvPlus.setOnClickListener(this);
         mIvMenu.setOnClickListener(this);
-
-
     }
 
     @Override
@@ -94,8 +88,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 startActivity(intent);
 
                 break;
-
-
             case R.id.tr_message_online:
                 //event click Message Online into Menu
 
