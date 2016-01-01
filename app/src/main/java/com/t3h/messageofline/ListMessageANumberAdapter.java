@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class ListMessageANumberAdapter extends BaseAdapter {
     public static final int TYPE_OUTGOING = 1;
     public static final int TYPE_INCOMING = 2;
+    private static final int TYPE_DRAFT = 3;
     private ArrayList<ItemMessage> mArrayMessages = new ArrayList<>();
     private LayoutInflater mInflater;
     private Context mContext;
@@ -56,13 +57,18 @@ public class ListMessageANumberAdapter extends BaseAdapter {
             case TYPE_OUTGOING:
                 view = mInflater.inflate(R.layout.item_message_left, parent, false);
                 mBody = (TextView) view.findViewById(R.id.item_message_left);
+                mBody.setText(mArrayMessages.get(position).getmBody() + "\n" + mArrayMessages.get(position).getmTime());
                 break;
             case TYPE_INCOMING:
                 view = mInflater.inflate(R.layout.item_message_right, parent, false);
                 mBody = (TextView) view.findViewById(R.id.item_message_right);
+                mBody.setText(mArrayMessages.get(position).getmBody() + "\n" + mArrayMessages.get(position).getmTime());
+                break;
+            case TYPE_DRAFT:
+                view = mInflater.inflate(R.layout.item_message_right, parent, false);
                 break;
         }
-        mBody.setText(mArrayMessages.get(position).getmBody() + "\n" + mArrayMessages.get(position).getmTime());
+
         return view;
     }
 

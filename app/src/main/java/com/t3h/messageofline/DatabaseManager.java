@@ -104,14 +104,13 @@ public class DatabaseManager {
         }
     }
 
-
     public String getAddress(String id) {
         String address = "";
-        Uri message = Uri.parse("content://mms-sms/canonical-addresses");
+        Uri message = Uri.parse("content://sms");
         ContentResolver cr = context.getContentResolver();
-        String[] columns = {"address"};
-        String where = "_id=?";
-        Cursor c = cr.query(message, columns, where, new String[]{id}, null, null);
+        String[] columns = {"*"};
+        String where = "thread_id=?";
+        Cursor c = cr.query(message, columns, where,new String[]{id}, null, null);
         c.moveToFirst();
         while (c.isAfterLast() == false) {
             address = c.getString(c.getColumnIndex(COLUMN_ADDRESS));
@@ -154,10 +153,12 @@ public class DatabaseManager {
             String numberMessage = c.getString(c.getColumnIndex(COLUMN_MESSAGE_COUNT));
             String date=fomatTime(c.getString(c.getColumnIndex(COLUMN_DATE)));
             String address = getAddress(id);
-            if (!address.equals("")) {
-                String mavung = address.substring(0, 1);
-                if (mavung.equals("+") && address.length() > 6) {
-                    address = "0" + address.substring(3);
+            if (address != null) {
+                if(address.length()>8){
+                    String mavung = address.substring(0, 1);
+                    if (mavung.equals("+") && address.length() > 6) {
+                        address = "0" + address.substring(3);
+                    }
                 }
             } else {
                 address="Không lấy được.";
