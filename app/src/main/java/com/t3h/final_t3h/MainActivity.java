@@ -6,13 +6,16 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.t3h.messageofline.ActivityNewMessage;
+import com.t3h.messageofline.CommonValue;
 import com.t3h.messageofline.DatabaseManager;
+import com.t3h.messageofline.ListMessageOfANumberActivity;
 import com.t3h.messageofline.MessageAdapter;
 
 public class MainActivity extends Activity implements View.OnClickListener {
@@ -74,6 +77,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mTrLogOut.setOnClickListener(this);
         mIvPlus.setOnClickListener(this);
         mIvMenu.setOnClickListener(this);
+        mLvMessage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivityListMessage(position);
+            }
+        });
+    }
+
+    private void startActivityListMessage(int position) {
+        Intent intent=new Intent(MainActivity.this,ListMessageOfANumberActivity.class);
+        String id= mDatabaseSMS.getmArrayAddress().get(position).getmId();
+        String name=mDatabaseSMS.getmArrayAddress().get(position).getmAddress();
+        intent.putExtra(CommonValue.KEY_ID,id);
+        intent.putExtra(CommonValue.NAME_CONTACT,name);
+        startActivity(intent);
     }
 
     @Override
@@ -113,6 +131,4 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
         }
     }
-
-
 }
