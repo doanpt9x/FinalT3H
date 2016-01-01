@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.BaseColumns;
+import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.util.Log;
 
@@ -16,14 +17,18 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import android.provider.ContactsContract.PhoneLookup;
 
 /**
  * Created by NGO VAN TUAN on 25/11/2015.
  */
 public class DatabaseManager {
+
 
     private SQLiteDatabase mSQLdata;
     private static final String DATA_BASE_PATH = Environment.getDataDirectory().getPath() + "/data/com.t3h.final_t3h/databases";
@@ -31,14 +36,14 @@ public class DatabaseManager {
 
 
     private static final String TAG = "DatabaseManager";
-
+    private static final String COLUMN_BODY = "body";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_ADDRESS = "address";
     public static final String COLUMN_NAME = "x_name";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_SNIPPET = "snippet";
     public static final String COLUMN_READ = "read";
-    public static final String COLUMN_TYPE = "x_sub_msg_type";
+    public static final String COLUMN_TYPE = "type";
     public static final String COLUMN_MESSAGE_COUNT = "message_count";
     private Context context;
 
@@ -100,23 +105,45 @@ public class DatabaseManager {
     }
 
 
-    public void getAddress() {
+    public String getAddress(String id) {
+        String address = "";
         Uri message = Uri.parse("content://mms-sms/canonical-addresses");
         ContentResolver cr = context.getContentResolver();
-        Cursor c = cr.query(message, new String[]{"date"}, null, null, null);
+        String[] columns = {"address"};
+        String where = "_id=?";
+        Cursor c = cr.query(message, columns, where, new String[]{id}, null, null);
         c.moveToFirst();
         while (c.isAfterLast() == false) {
-            String id = c.getString(c.getColumnIndex(COLUMN_ID));
-            String address = c.getString(c.getColumnIndex(COLUMN_ADDRESS));
-            //String name = c.getString(c.getColumnIndex(COLUMN_NAME));
-            String name="";
-            mArrayAddress.add(new ItemMessage(id, address, name));
-            c.moveToNext();
+            address = c.getString(c.getColumnIndex(COLUMN_ADDRESS));
+            break;
         }
         c.close();
+        return address;
     }
-    public void getThreadID(){
-       // Uri uri=Uri.withAppendedPath();
+
+    private String retrieveContactName(String phoneNumber) {
+        String contactName;
+        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER};
+        Cursor people = context.getContentResolver().query(uri, projection, null, null, null);
+        int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+        int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+        contactName = phoneNumber;
+        people.moveToFirst();
+        do {
+            String name = people.getString(indexName);
+            String number = people.getString(indexNumber);
+            if (number.equals(phoneNumber)) {
+                contactName = name;
+                break;
+            }
+        } while (people.moveToNext());
+        return contactName;
+
+    }
+
+    public void getThreadID() {
         Uri message = Uri.parse("content://mms-sms/threads");
         ContentResolver cr = context.getContentResolver();
         Cursor c = cr.query(message, new String[]{"*"}, null, null, null);
@@ -124,20 +151,54 @@ public class DatabaseManager {
         while (c.isAfterLast() == false) {
             String id = c.getString(c.getColumnIndex(COLUMN_ID));
             String body = c.getString(c.getColumnIndex(COLUMN_SNIPPET));
-            String address = c.getString(c.getColumnIndex(COLUMN_SNIPPET));
-            String numberMessage=c.getString(c.getColumnIndex(COLUMN_MESSAGE_COUNT));
+            String numberMessage = c.getString(c.getColumnIndex(COLUMN_MESSAGE_COUNT));
             String date=fomatTime(c.getString(c.getColumnIndex(COLUMN_DATE)));
-            mArrayAddress.add(new ItemMessage(id,address,body,date,numberMessage));
+            String address = getAddress(id);
+            if (!address.equals("")) {
+                String mavung = address.substring(0, 1);
+                if (mavung.equals("+") && address.length() > 6) {
+                    address = "0" + address.substring(3);
+                }
+            } else {
+                address="Không lấy được.";
+            }
+            String namecontact = retrieveContactName(address);
+            mArrayAddress.add(new ItemMessage(id, namecontact, body, date, numberMessage));
             c.moveToNext();
         }
         c.close();
     }
+
     public String fomatTime(String time) {
         long dateLong = Long.parseLong(time + "");
         Date dateModified = new Date(dateLong);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy" + " | " + "HH:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
         String formattedDateString = formatter.format(dateModified);
         return formattedDateString;
     }
+    public String fomatTimeListSMS(String time) {
+        long dateLong = Long.parseLong(time + "");
+        Date dateModified = new Date(dateLong);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:SS");
+        String formattedDateString = formatter.format(dateModified);
+        return formattedDateString;
+    }
+    public ArrayList<ItemMessage> getAllMessageANumber(String id) {
+        mArrayAddress.clear();
+        Uri message = Uri.parse("content://sms");
+        ContentResolver cr = context.getContentResolver();
+        String[] columns = {"*"};
+        String where = "thread_id=?";
+        Cursor c = cr.query(message, columns, where,new String[]{id}, null, null);
+        c.moveToFirst();
+        while (c.isAfterLast() == false) {
+            String type = c.getString(c.getColumnIndex(COLUMN_TYPE));
+            String body = c.getString(c.getColumnIndex(COLUMN_BODY));
+            String date=fomatTimeListSMS(c.getString(c.getColumnIndex(COLUMN_DATE)));
+            mArrayAddress.add(new ItemMessage(type, body, date));
+            c.moveToNext();
+        }
+        c.close();
+        return mArrayAddress;
+    }
 }
-
