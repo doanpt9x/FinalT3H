@@ -1,4 +1,4 @@
-package com.t3h.messageofline;
+package com.t3h.message_offline;
 
 /**
  * Created by NGO VAN TUAN on 28/12/2015.

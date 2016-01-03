@@ -1,4 +1,4 @@
-package com.t3h.messageofline;
+package com.t3h.message_offline;
 
 import android.app.Activity;
 import android.app.PendingIntent;

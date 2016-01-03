@@ -1,28 +1,21 @@
-package com.t3h.messageofline;
+package com.t3h.message_offline;
 
-import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
-import android.provider.BaseColumns;
 import android.provider.ContactsContract;
-import android.provider.Telephony;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import android.provider.ContactsContract.PhoneLookup;
 
 /**
  * Created by NGO VAN TUAN on 25/11/2015.
@@ -139,7 +132,6 @@ public class DatabaseManager {
             }
         } while (people.moveToNext());
         return contactName;
-
     }
 
     public void getThreadID() {
@@ -151,33 +143,33 @@ public class DatabaseManager {
             String id = c.getString(c.getColumnIndex(COLUMN_ID));
             String body = c.getString(c.getColumnIndex(COLUMN_SNIPPET));
             String numberMessage = c.getString(c.getColumnIndex(COLUMN_MESSAGE_COUNT));
-            String date=fomatTime(c.getString(c.getColumnIndex(COLUMN_DATE)));
+            String date=formatTime(c.getString(c.getColumnIndex(COLUMN_DATE)));
             String address = getAddress(id);
             if (address != null) {
                 if(address.length()>8){
-                    String mavung = address.substring(0, 1);
-                    if (mavung.equals("+") && address.length() > 6) {
+                    String zipCode = address.substring(0, 1);
+                    if (zipCode.equals("+") && address.length() > 6) {
                         address = "0" + address.substring(3);
                     }
                 }
             } else {
                 address="Không lấy được.";
             }
-            String namecontact = retrieveContactName(address);
-            mArrayAddress.add(new ItemMessage(id, namecontact, body, date, numberMessage));
+            String nameContact = retrieveContactName(address);
+            mArrayAddress.add(new ItemMessage(id, nameContact, body, date, numberMessage));
             c.moveToNext();
         }
         c.close();
     }
 
-    public String fomatTime(String time) {
+    public String formatTime(String time) {
         long dateLong = Long.parseLong(time + "");
         Date dateModified = new Date(dateLong);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
         String formattedDateString = formatter.format(dateModified);
         return formattedDateString;
     }
-    public String fomatTimeListSMS(String time) {
+    public String formatTimeListSMS(String time) {
         long dateLong = Long.parseLong(time + "");
         Date dateModified = new Date(dateLong);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:SS");
@@ -195,7 +187,7 @@ public class DatabaseManager {
         while (c.isAfterLast() == false) {
             String type = c.getString(c.getColumnIndex(COLUMN_TYPE));
             String body = c.getString(c.getColumnIndex(COLUMN_BODY));
-            String date=fomatTimeListSMS(c.getString(c.getColumnIndex(COLUMN_DATE)));
+            String date=formatTimeListSMS(c.getString(c.getColumnIndex(COLUMN_DATE)));
             mArrayAddress.add(new ItemMessage(type, body, date));
             c.moveToNext();
         }

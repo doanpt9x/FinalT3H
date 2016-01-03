@@ -1,4 +1,4 @@
-package com.t3h.messageofline;
+package com.t3h.message_offline;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.t3h.common.CommonValue;
 import com.t3h.final_t3h.R;
 
 import java.util.ArrayList;
