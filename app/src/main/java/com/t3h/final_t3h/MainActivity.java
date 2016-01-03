@@ -12,11 +12,11 @@ import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.t3h.messageofline.ActivityNewMessage;
-import com.t3h.messageofline.CommonValue;
-import com.t3h.messageofline.DatabaseManager;
-import com.t3h.messageofline.ListMessageOfANumberActivity;
-import com.t3h.messageofline.MessageAdapter;
+import com.t3h.message_offline.ActivityNewMessage;
+import com.t3h.common.CommonValue;
+import com.t3h.message_offline.DatabaseManager;
+import com.t3h.message_offline.ListMessageOfANumberActivity;
+import com.t3h.message_offline.MessageAdapter;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     private DrawerLayout mDrlMenu;
@@ -24,11 +24,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private ImageView mIvMenu;
     private ImageView mIvAvata;
     private ImageView mIvPlus;
-
-
     private TextView mTvName;
     private TextView mTvEmail;
-
     private TableRow mTrCallLog;
     private TableRow mTrSetting;
     private TableRow mTrAboutUs;
@@ -52,17 +49,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mIvMenu = (ImageView) findViewById(R.id.iv_menu);
         mIvPlus = (ImageView) findViewById(R.id.iv_plus);
         mIvAvata = (ImageView) findViewById(R.id.iv_avatar);
-
         mTvName = (TextView) findViewById(R.id.tv_name);
         mTvEmail = (TextView) findViewById(R.id.tv_email);
-
         mTrMessageOnline = (TableRow) findViewById(R.id.tr_message_online);
         mTrCallLog = (TableRow) findViewById(R.id.tr_call_logs);
         mTrAboutUs = (TableRow) findViewById(R.id.tr_about_us);
         mTrMyAcount = (TableRow) findViewById(R.id.tr_acount);
         mTrSetting = (TableRow) findViewById(R.id.tr_setting);
         mTrLogOut = (TableRow) findViewById(R.id.tr_power);
-
         mMessageAdapter = new MessageAdapter(this);
         mDatabaseSMS = new DatabaseManager(this);
         mDatabaseSMS.getThreadID();
@@ -99,36 +93,53 @@ public class MainActivity extends Activity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.iv_menu:
                 mDrlMenu.openDrawer(Gravity.LEFT);
-
                 break;
             case R.id.iv_plus:
-                Intent intent = new Intent(this, ActivityNewMessage.class);
-                startActivity(intent);
-
+                startActivityNewMessage();
                 break;
             case R.id.tr_message_online:
-                //event click Message Online into Menu
-
+                startActivityHomeOnline();
                 break;
             case R.id.tr_call_logs:
-                //event click Call logs into Menu
-
+                startActivityCallLogs();
                 break;
             case R.id.tr_setting:
-                //event click settings into Menu
-
+                startActivitySetting();
                 break;
             case R.id.tr_about_us:
-                //event click about us into Menu
-
+                startActivityAboutUs();
                 break;
             case R.id.tr_acount:
-                //event click my acount into Menu
-
+                startActivityInformationMyAccount();
                 break;
             case R.id.tr_power:
-                //event click log out into Menu
+                //click menu power
                 break;
         }
+    }
+
+    private void startActivityInformationMyAccount() {
+
+    }
+
+    private void startActivityAboutUs() {
+    }
+
+    private void startActivitySetting() {
+
+    }
+
+    private void startActivityCallLogs() {
+
+    }
+
+    private void startActivityHomeOnline() {
+        Intent intent = new Intent(this, HomeOnlineActivity.class);
+        startActivity(intent);
+    }
+
+    private void startActivityNewMessage() {
+        Intent intent = new Intent(this, ActivityNewMessage.class);
+        startActivity(intent);
     }
 }
