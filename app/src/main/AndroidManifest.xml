@@ -1,17 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--suppress ALL -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.t3h.final_t3h">
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:name="com.t3h.common.GlobalApplication"
         android:allowBackup="true"
@@ -19,7 +35,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeOnlineActivity"
             android:supportsRtl="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,9 +48,6 @@
             android:label="@string/app_name"></activity>
         <activity
             android:name="com.t3h.message_offline.ListMessageOfANumberActivity"
-            android:label="@string/app_name"></activity>
-        <activity
-            android:name="com.t3h.final_t3h.HomeOnlineActivity"
             android:label="@string/app_name"></activity>
         <activity
             android:name="com.t3h.parses.LoginActivity"
@@ -57,12 +70,41 @@
         <activity
             android:name="com.t3h.parses.UploadImageActivity"
             android:label="@string/app_name"></activity>
-        <receiver
-            android:name="com.t3h.message_offline.MessageBroadCast"
+        <activity
+            android:name=".DetailActivity"
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name=".MessageActivity"
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name=".ImageActivity"
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name=".PictureActivity"
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name="com.t3h.call.InComingCallActivity"
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name="com.t3h.call.OutgoingCallActivity"
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name="com.t3h.call.CallLogActivity"
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name="com.t3h.final_t3h.AdditionFriend"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+        <service
+            android:name="com.t3h.common.MMCClientService"
             android:enabled="true"
-            android:exported="true">
+            android:exported="false" />
+        <receiver
+            android:name="com.t3h.common.MMCBroadcastComplete"
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
     </application>

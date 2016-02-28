@@ -19,7 +19,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="80dp"
             android:text="@string/login"
-            android:textColor="@color/green_500"
+            android:textColor="@color/blue_duck2"
             android:textSize="48sp"
             android:textStyle="bold" />
 
@@ -44,8 +44,8 @@
                     android:layout_gravity="center"
                     android:hint="Phone Number"
                     android:inputType="phone"
-                    android:textColor="@color/green_500"
-                    android:textColorHint="@color/colorPrimary"
+                    android:textColor="@color/blue_duck2"
+                    android:textColorHint="@color/blue_duck"
                     android:textSize="20sp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -62,8 +62,8 @@
                     android:layout_gravity="center"
                     android:hint="Password"
                     android:inputType="textPassword"
-                    android:textColor="@color/green_500"
-                    android:textColorHint="@color/colorPrimary"
+                    android:textColor="@color/blue_duck2"
+                    android:textColorHint="@color/blue_duck"
                     android:textSize="20sp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -121,5 +121,5 @@
         android:layout_gravity="bottom|center_horizontal"
         android:layout_margin="16dp"
         android:src="@drawable/ic_sign_up"
-        app:backgroundTint="@color/green_500" />
+        app:backgroundTint="@color/blue_duck2" />
 </android.support.design.widget.CoordinatorLayout>

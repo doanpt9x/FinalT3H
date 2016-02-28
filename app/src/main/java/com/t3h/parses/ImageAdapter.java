@@ -11,9 +11,8 @@ import android.widget.BaseAdapter;
 
 import com.squareup.picasso.Picasso;
 import com.t3h.common.CommonMethod;
-import com.t3h.common.CommonValue;
 import com.t3h.common.GlobalApplication;
-import com.t3h.common.SquareImageView;
+import com.t3h.custom_view.SquareImageView;
 import com.t3h.final_t3h.R;
 
 import java.io.File;

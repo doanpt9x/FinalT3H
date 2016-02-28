@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.t3h.custom_view.TouchImage;
 import com.t3h.final_t3h.R;
 
 import java.io.ByteArrayOutputStream;

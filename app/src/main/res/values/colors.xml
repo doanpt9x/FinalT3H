@@ -4,8 +4,12 @@
     <color name="colorPrimaryDark">#FF6F00</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorTopMenu">#FF8F00</color>
-    <color name="blue_duck">#1E88E5</color>
+    <color name="blue_duck">#00838F</color>
+    <color name="blue_duck2">#006064</color>
     <color name="red">#F44336</color>
     <color name="grey_light">#E0E0E0</color>
     <color name="green_500">#33691E</color>
+    <color name="red_500">#f44336</color>
+    <color name="yellow_500">#FFEB3B</color>
+    <color name="textColorSecondary">#727272</color>
 </resources>

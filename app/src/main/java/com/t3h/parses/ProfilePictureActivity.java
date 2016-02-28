@@ -101,9 +101,20 @@ public class ProfilePictureActivity extends Activity implements View.OnClickList
         }
     }
 
-    private void signUpSuccess(Bitmap bitmapAvatar) {
-        ParseUser currentUser = ParseUser.getCurrentUser();
+    private void signUpSuccess(final Bitmap bitmapAvatar) {
+        final ParseUser currentUser = ParseUser.getCurrentUser();
         CommonMethod.uploadAvatar(currentUser, bitmapAvatar);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                GlobalApplication globalApplication = (GlobalApplication) ProfilePictureActivity.this.getApplication();
+                globalApplication.setAvatar(bitmapAvatar);
+                globalApplication.setFullName(currentUser.get("fullName")+"");
+                globalApplication.setPhoneNumber(currentUser.getUsername()+"");
+                globalApplication.setEmail(currentUser.getEmail());
+            }
+        });
+
         startActivityMainOnline();
     }
 

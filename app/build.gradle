@@ -1,4 +1,9 @@
 apply plugin: 'com.android.application'
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
 
 android {
     compileSdkVersion 23
@@ -16,6 +21,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            res.srcDirs = ['src/main/res', 'src/main/res/drawables/finch',
+                           'src/main/res/drawables/sallyfrien',
+                           'src/main/res/drawables/linecharactersinlove',
+                           'src/main/res/drawables/yaya',
+                           'src/main/res/drawables/wallpaper']
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+        }
+    }
     productFlavors {
     }
 }
@@ -27,5 +42,6 @@ dependencies {
     compile 'com.android.support:design:+'
     compile 'com.parse.bolts:bolts-android:+'
     compile 'de.hdodenhof:circleimageview:+'
+    compile 'com.hudomju:swipe-to-dismiss-undo:+'
     compile 'com.squareup.picasso:picasso:+'
 }

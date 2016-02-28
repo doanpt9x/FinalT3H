@@ -1,8 +1,13 @@
 package com.t3h.final_t3h;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
@@ -11,7 +16,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.parse.ParseUser;
+import com.t3h.common.GlobalApplication;
 import com.t3h.message_offline.ActivityNewMessage;
 import com.t3h.common.CommonValue;
 import com.t3h.message_offline.DatabaseManager;
@@ -80,11 +88,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void startActivityListMessage(int position) {
-        Intent intent=new Intent(MainActivity.this,ListMessageOfANumberActivity.class);
-        String id= mDatabaseSMS.getmArrayAddress().get(position).getmId();
-        String name=mDatabaseSMS.getmArrayAddress().get(position).getmAddress();
-        intent.putExtra(CommonValue.KEY_ID,id);
-        intent.putExtra(CommonValue.NAME_CONTACT,name);
+        Intent intent = new Intent(MainActivity.this, ListMessageOfANumberActivity.class);
+        String id = mDatabaseSMS.getmArrayAddress().get(position).getmId();
+        String name = mDatabaseSMS.getmArrayAddress().get(position).getmAddress();
+        intent.putExtra(CommonValue.KEY_ID, id);
+        intent.putExtra(CommonValue.NAME_CONTACT, name);
         startActivity(intent);
     }
 
@@ -134,8 +142,37 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void startActivityHomeOnline() {
-        Intent intent = new Intent(this, HomeOnlineActivity.class);
-        startActivity(intent);
+        if (isNetworkConnected(this)) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ParseUser currentUser = ParseUser.getCurrentUser();
+                    if (currentUser != null) {
+                        GlobalApplication.startWaitingMMC = true;
+                        GlobalApplication.startActivityMessage = false;
+                        GlobalApplication.checkLoginThisId = true;
+                        currentUser.put("isOnline", true);
+                        currentUser.saveInBackground();
+                        Intent intent = new Intent(MainActivity.this, MainOnlineActivity.class);
+                        MainActivity.this.startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(MainActivity.this, HomeOnlineActivity.class);
+                        MainActivity.this.startActivity(intent);
+                    }
+                    MainActivity.this.finish();
+                }
+            }, 1000);
+
+        }else{
+            Toast.makeText(this,"Please enable network!",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static boolean isNetworkConnected(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(
+                Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo == null ? false : true;
     }
 
     private void startActivityNewMessage() {

@@ -27,7 +27,7 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true">
 
-        <com.t3h.common.TouchImage
+        <com.t3h.custom_view.TouchImage
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

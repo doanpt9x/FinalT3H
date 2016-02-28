@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFA000">
+    android:background="#006064">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,10 +20,11 @@
                 android:layout_height="185dp"
                 android:layout_centerInParent="true"
                 android:contentDescription="@null"
-                android:scaleType="centerCrop"
-                android:scaleX="0.75"
-                android:scaleY="0.75"
-                android:src="@drawable/icon_home" />
+                android:scaleType="centerInside"
+                android:scaleX="1"
+                android:scaleY="1"
+                android:src="@drawable/wechat"
+                 />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -39,7 +40,7 @@
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:shadowColor="#000000"
-                    android:text="Welcome!"
+                    android:text="MULTIMEDIA"
                     android:textColor="#ffffff"
                     android:textSize="36sp"
                     android:textStyle="bold" />
@@ -47,7 +48,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="To Work Online"
+                    android:text="Chat &amp; Call &amp; Mail"
                     android:textColor="#ffffff"
                     android:textSize="24sp"
                     android:textStyle="normal" />

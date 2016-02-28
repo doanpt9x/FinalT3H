@@ -191,7 +191,6 @@ public class SignUpActivity extends Activity implements View.OnClickListener{
                 if (e == null) {
                     newUser.put("isOnline", true);
                     newUser.saveInBackground();
-
                     progressDialog.dismiss();
                     btnLogIn.setBackgroundTintList(ColorStateList
                             .valueOf(Color.parseColor("#e91e63")));

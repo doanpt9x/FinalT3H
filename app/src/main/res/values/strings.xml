@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Final_T3H</string>
+    <string name="app_name">MMC OK</string>
     <string name="my_account">My Account</string>
     <string name="about_us">About us</string>
     <string name="settings">Settings</string>
@@ -9,7 +9,10 @@
     <string name="login">LOGIN</string>
     <string name="sign_up">SIGN UP</string>
     <string name="forgot_password">Forgot password</string>
-    <string name="term_condition"><![CDATA[I agree to <b>THE TERMS AND CONDITIONS</b>]]></string>
+    <string name="term_condition">I agree to the<b> TERMS AND CONDITIONS</b></string>
     <string name="title_phone_number">Phone Number</string>
     <string name="title_password">Password</string>
+    <string name="open_navigation">OPEN</string>
+    <string name="close_navigation">CLOSE</string>
+    <string name="action_settings">Settings</string>
 </resources>

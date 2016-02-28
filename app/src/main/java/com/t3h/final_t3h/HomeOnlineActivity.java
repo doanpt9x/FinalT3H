@@ -1,21 +1,13 @@
 package com.t3h.final_t3h;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 
-import com.parse.Parse;
-import com.t3h.common.ServerInfo;
-import com.t3h.common.SharedPreferences;
 import com.t3h.parses.LoginActivity;
 import com.t3h.parses.SignUpActivity;
-
-import java.util.ArrayList;
 
 /**
  * Created by Android on 1/3/2016.

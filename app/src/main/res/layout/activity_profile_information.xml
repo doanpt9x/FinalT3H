@@ -13,8 +13,8 @@
         android:layout_marginLeft="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="48dp"
-        android:text="STEP 1"
-        android:textColor="@color/green_500"
+        android:text="NEXT STEEP"
+        android:textColor="@color/blue_duck2"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -27,7 +27,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:text="Profile Information"
-        android:textColor="@color/green_500"
+        android:textColor="@color/blue_duck2"
         android:textSize="32sp"
         android:textStyle="bold" />
 
@@ -59,8 +59,8 @@
                     android:layout_gravity="center"
                     android:hint="First Name"
                     android:inputType="textPersonName"
-                    android:textColor="@color/green_500"
-                    android:textColorHint="@color/colorPrimary"
+                    android:textColor="@color/blue_duck2"
+                    android:textColorHint="@color/blue_duck"
                     android:textSize="20sp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -76,8 +76,8 @@
                     android:layout_gravity="center"
                     android:hint="Last Name"
                     android:inputType="textPersonName"
-                    android:textColor="@color/green_500"
-                    android:textColorHint="@color/colorPrimary"
+                    android:textColor="@color/blue_duck2"
+                    android:textColorHint="@color/blue_duck"
                     android:textSize="20sp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -96,8 +96,8 @@
                 android:layout_gravity="center"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/green_500"
-                android:textColorHint="@color/colorPrimary"
+                android:textColor="@color/blue_duck2"
+                android:textColorHint="@color/blue_duck"
                 android:textSize="20sp" />
         </android.support.design.widget.TextInputLayout>
 
@@ -129,7 +129,7 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:text="09/07/1993"
-                android:textColor="@color/green_500" />
+                android:textColor="@color/blue_duck2" />
 
         </RelativeLayout>
 
@@ -161,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="Male"
-                    android:textColor="@color/green_500" />
+                    android:textColor="@color/blue_duck2" />
 
                 <RadioButton
                     android:id="@+id/rd_female"
@@ -182,7 +182,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/bg_button_round"
             android:enabled="false"
-            android:text="SAVE AND CONTINUE"
+            android:text="CONTINUE"
             android:textColor="#ffffff"
             android:textStyle="bold" />
 
