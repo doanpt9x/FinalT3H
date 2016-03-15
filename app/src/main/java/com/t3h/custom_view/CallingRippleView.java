@@ -14,7 +14,6 @@ import java.util.TimerTask;
 
 public class CallingRippleView extends View {
     public static final int SPEED_FAST = 3;
-    public static final int SPEED_SLOW = 1;
     public static final int BLACK = 0xFFFFFFFF;
     public static final int COLOR = 0xFF4CAF50;
     public static final int ALPHA = 0xFF000000;
@@ -101,7 +100,7 @@ public class CallingRippleView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (inited)
-            for (int i = 0; i < currRadius.length; ++i)
+            for (int i = 0; i < currRadius.length-1; ++i)
                 canvas.drawCircle(x, y, currRadius[i], getPaint(currRadius[i]));
     }
 

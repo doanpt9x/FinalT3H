@@ -73,7 +73,6 @@ public class MessageFragment extends Fragment implements AdapterView.OnItemClick
         messageLogAdapter = new MessageLogAdapter();
         listViewMessage.setAdapter(messageLogAdapter);
         this.registerBroadcastMessageLog(context);
-
         if (messageLogAdapter.getCount() == 0) {
             listViewMessage.setVisibility(View.GONE);
             layoutNoConversations.setVisibility(View.VISIBLE);
@@ -210,14 +209,7 @@ public class MessageFragment extends Fragment implements AdapterView.OnItemClick
             }
 
             String id = messagesLogItems.get(position).getId();
-//            int index = ((GlobalApplication) getActivity().getApplication()).getAllFriendItems()
-//                    .indexOf(new AllFriendItem(id, 1));
-//            if (index > -1) {
-//                viewHolder.imgAvatar.setImageBitmap(((GlobalApplication) getActivity()
-//                        .getApplication()).getAllFriendItems().get(index).getAvatar());
-//            } else {
             viewHolder.imgAvatar.setImageResource(R.drawable.ic_avatar_default);
-//            }
             ParseQuery<ParseUser> query = ParseUser.getQuery();
             final ViewHolder finalViewHolder = viewHolder;
             query.getInBackground(id, new GetCallback<ParseUser>() {

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_item_primary"
+            android:icon="@drawable/icon_email"
+            android:title="Primary" />
+
+        <item
+            android:id="@+id/menu_item_social"
+            android:icon="@drawable/icon_account"
+            android:title="Social" />
+        <item
+            android:id="@+id/menu_item_promotions"
+            android:icon="@drawable/icon_tag"
+            android:title="Promotions" />
+
+    </group>
+
+    <item android:title="All inbox">
+        <menu>
+
+            <item
+                android:id="@+id/menu_item_important"
+
+                android:title="Important" />
+            <item
+                android:id="@+id/menu_item_sent"
+
+                android:title="Sent" />
+            <item
+                android:id="@+id/menu_item_spam"
+
+                android:title="Spam" />
+        </menu>
+    </item>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_item_call_chat"
+            android:icon="@drawable/call_messenger"
+            android:title="Chat And Call" />
+        <item
+            android:id="@+id/menu_item_change_account"
+            android:icon="@drawable/account_convert"
+            android:title="Change Account" />
+
+    </group>
+
+</menu>

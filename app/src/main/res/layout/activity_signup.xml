@@ -32,6 +32,7 @@
             android:background="#ffffff"
             android:paddingLeft="32dp"
             android:paddingRight="32dp">
+
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/til_phone_number"
                 android:layout_width="match_parent"
@@ -84,8 +85,7 @@
                     android:textColorHint="@color/blue_duck"
                     android:textSize="20sp" />
             </android.support.design.widget.TextInputLayout>
-
-            <CheckBox
+            <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/ck_term_condition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,8 +94,19 @@
                 android:gravity="center"
                 android:text="@string/term_condition"
                 android:textColor="#666666"
-                android:textSize="12sp" />
-
+                android:textSize="12sp"
+                android:checked="false"/>
+            <!--<CheckBox-->
+                <!--android:id="@+id/ck_term_condition"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@+id/til_confirm"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:gravity="center"-->
+                <!--android:text="@string/term_condition"-->
+                <!--android:textColor="#666666"-->
+                <!--android:textSize="12sp"-->
+                <!--android:checked="false" />-->
             <Button
                 android:id="@+id/btn_sign_up_sign"
                 android:layout_width="match_parent"

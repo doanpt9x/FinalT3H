@@ -3,6 +3,7 @@ package com.t3h.final_t3h;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -38,6 +39,7 @@ public class AdditionFriend extends AppCompatActivity implements View.OnClickLis
         btnAddFriend = (Button) findViewById(R.id.btnAddFriend);
         btnAddFriend.setOnClickListener(this);
         edtPhoneNumber = (EditText) findViewById(R.id.edtPhoneNumber);
+        edtPhoneNumber.setTextColor(Color.parseColor("#727272"));
         edtPhoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

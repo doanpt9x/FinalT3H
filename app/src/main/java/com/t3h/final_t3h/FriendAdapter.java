@@ -28,7 +28,6 @@ public class FriendAdapter extends BaseAdapter {
 
     public FriendAdapter(Context context, Activity activity) {
         layoutInflater = LayoutInflater.from(context);
-
         if (((GlobalApplication) activity.getApplication()).getAllFriendItems() != null) {
             allFriendItems = ((GlobalApplication) activity.getApplication()).getAllFriendItems();
         } else {

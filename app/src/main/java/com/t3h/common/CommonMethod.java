@@ -11,6 +11,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
@@ -54,7 +56,12 @@ public class CommonMethod {
     public int convertSizeIcon(float density, int sizeDp) {
         return (int) (sizeDp * (density / 160));
     }
-
+    public boolean isNetworkConnected(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(
+                Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo == null ? false : true;
+    }
     public static void uploadAvatar(ParseUser parseUser, Bitmap avatar) {
         if (parseUser == null) return;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -70,6 +77,21 @@ public class CommonMethod {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public int calculateInSampleSize(BitmapFactory.Options options,
+                                     int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+        if (height > reqHeight || width > reqWidth) {
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+        return inSampleSize * 2;
     }
     public SpannableString toSpannableString(Context context, int emoticonId) {
         SpannableString spannableString = new SpannableString(String.valueOf(emoticonId));
@@ -90,21 +112,7 @@ public class CommonMethod {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFile(uri, options);
     }
-    public int calculateInSampleSize(BitmapFactory.Options options,
-                                     int reqWidth, int reqHeight) {
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-        if (height > reqHeight || width > reqWidth) {
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-            while ((halfHeight / inSampleSize) > reqHeight
-                    && (halfWidth / inSampleSize) > reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-        return inSampleSize * 2;
-    }
+
     public int getOrientation(String path) {
         int rotate = 0;
         try {
@@ -137,6 +145,14 @@ public class CommonMethod {
         bitmap = Bitmap.createBitmap(bitmap, 0, 0,
                 bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         return bitmap;
+    }
+
+    public String convertTimeToString(int timeCall) {
+        int minutes = (int) TimeUnit.MILLISECONDS.toMinutes(timeCall);
+        int seconds = (int) TimeUnit.MILLISECONDS.toSeconds(timeCall) - minutes * 60;
+        String time = (minutes < 10 ? "0" + minutes : "" + minutes)
+                + ":" + (seconds < 10 ? "0" + seconds : "" + seconds);
+        return time;
     }
     public ArrayList<AllFriendItem> loadListFriend(ParseUser currentUser, Activity activity) {
         final ArrayList<String> listFriendId = (ArrayList<String>) currentUser.get("listFriend");
@@ -190,14 +206,22 @@ public class CommonMethod {
         return simpleDateFormat.format(Calendar.getInstance().getTime());
     }
 
-    public String convertTimeToString(int timeCall) {
-        int minutes = (int) TimeUnit.MILLISECONDS.toMinutes(timeCall);
-        int seconds = (int) TimeUnit.MILLISECONDS.toSeconds(timeCall) - minutes * 60;
-        String time = (minutes < 10 ? "0" + minutes : "" + minutes)
-                + ":" + (seconds < 10 ? "0" + seconds : "" + seconds);
-        return time;
+    public Pair<Integer, Integer> getStandSizeBitmap(int width, int height,
+                                                     final int WIDTH_IMAGE_MAX,
+                                                     final int HEIGHT_IMAGE_MAX) {
+        if (width < WIDTH_IMAGE_MAX && height < HEIGHT_IMAGE_MAX) {
+            return null;
+        }
+        if (width > WIDTH_IMAGE_MAX) {
+            height = (int) ((float) (WIDTH_IMAGE_MAX) / width * height);
+            width = WIDTH_IMAGE_MAX;
+        }
+        if (height > HEIGHT_IMAGE_MAX) {
+            width = (int) ((float) (HEIGHT_IMAGE_MAX) / height * width);
+            height = HEIGHT_IMAGE_MAX;
+        }
+        return new Pair<>(width, height);
     }
-
     public void pushNotification(Activity srcActivity, Class destActivity, String content,
                                  int notificationId, int icon, boolean noClear) {
         if (noClear) {
@@ -226,21 +250,6 @@ public class CommonMethod {
             notificationManager.notify(notificationId, builder.build());
         }
     }
-    public Pair<Integer, Integer> getStandSizeBitmap(int width, int height,
-                                                     final int WIDTH_IMAGE_MAX,
-                                                     final int HEIGHT_IMAGE_MAX) {
-        if (width < WIDTH_IMAGE_MAX && height < HEIGHT_IMAGE_MAX) {
-            return null;
-        }
-        if (width > WIDTH_IMAGE_MAX) {
-            height = (int) ((float) (WIDTH_IMAGE_MAX) / width * height);
-            width = WIDTH_IMAGE_MAX;
-        }
-        if (height > HEIGHT_IMAGE_MAX) {
-            width = (int) ((float) (HEIGHT_IMAGE_MAX) / height * width);
-            height = HEIGHT_IMAGE_MAX;
-        }
-        return new Pair<>(width, height);
-    }
+
 
 }

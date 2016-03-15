@@ -53,10 +53,6 @@ public class CommonValue {
     public static final String MMC_KEY_PICTURE = "MMC_KEY_PIC_";
     public static final String MMC_KEY_DATE = "MMC_KEY_DATE";
 
-    public static final String URL_IMAGE = "URL_IMAGE";
-    public static final String X_IMAGE = "X_IMAGE";
-    public static final String Y_IMAGE = "Y_IMAGE";
-    public static final String CROP_PICTURE = "CROP_PICTURE";
     public static final String BYTE_AVATAR = "BYTE_AVATAR";
     public static final int KEY_LENGTH = 11;
     public static final int MAX_FILE_SIZE = 10485760;

@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,7 +12,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,17 +19,13 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.parse.GetDataCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.t3h.common.CommonMethod;
 import com.t3h.common.GlobalApplication;
-import com.t3h.final_t3h.AllFriendItem;
 import com.t3h.final_t3h.MainOnlineActivity;
 import com.t3h.final_t3h.R;
-
-import java.util.ArrayList;
 
 /**
  * Created by Android on 1/3/2016.
@@ -126,7 +120,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-                login(v);
+                boolean isNetwork = CommonMethod.getInstance().isNetworkConnected(LoginActivity.this);
+                if (isNetwork)
+                    login(v);
+                else
+                    Snackbar.make(v, "Network isn't available. Please enable network!", Snackbar.LENGTH_LONG)
+                            .setAction("ACTION", null)
+                            .show();
                 break;
             case R.id.btn_sign_up_login:
                 startActivitySignUp();
@@ -156,31 +156,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     String objectId = parseUser.getObjectId();
                     GlobalApplication globalApplication = (GlobalApplication) LoginActivity.this.getApplication();
 
-//                    if (!globalApplication.getIdUers().contains(objectId)) {
-//                        globalApplication.addIdUser(objectId);
-//                        GlobalApplication.startWaitingMMC = false;
-//                        GlobalApplication.checkLoginThisId = false;
-//                        GlobalApplication.startActivityMessage = false;
-//                        globalApplication.setFullName((String) parseUser.get("fullName"));
-//                        globalApplication.setPhoneNumber(parseUser.getUsername());
-//                        globalApplication.setEmail(parseUser.getEmail());
-//                        ParseFile parseFile = (ParseFile) parseUser.get("avatar");
-//                        if (parseFile != null) {
-//                            parseFile.getDataInBackground(new GetDataCallback() {
-//                                @Override
-//                                public void done(byte[] bytes, ParseException e) {
-//                                    if (e == null) {
-//                                        userAvatar = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//                                        ((GlobalApplication) getApplication()).setAvatar(userAvatar);
-//                                    }
-//                                }
-//                            });
-//                        }
-//                    } else {
                     GlobalApplication.startWaitingMMC = false;
                     GlobalApplication.checkLoginThisId = true;
                     GlobalApplication.startActivityMessage = false;
-//                    }
                     progressDialog.dismiss();
                     btnSignUp.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00838F")));
                     btnSignUp.setImageResource(R.drawable.ic_checkmark);

@@ -20,6 +20,7 @@ import android.widget.EditText;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+import com.t3h.common.CommonMethod;
 import com.t3h.final_t3h.R;
 
 /**
@@ -54,7 +55,7 @@ public class SignUpActivity extends Activity implements View.OnClickListener{
                 if (checkBoxAgree.isChecked()) {
                     isCheckBoxChecked = true;
                     enabledButtonSignUp();
-                    checkBoxAgree.setTextColor(ContextCompat.getColor(SignUpActivity.this, R.color.green_500));
+                    checkBoxAgree.setTextColor(Color.parseColor("#006064"));
                 } else {
                     isCheckBoxChecked = false;
                     btnSignUp.setEnabled(false);
@@ -161,7 +162,14 @@ public class SignUpActivity extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sign_up_sign:
-                signUp(v);
+                boolean isNetwork = CommonMethod.getInstance().isNetworkConnected(SignUpActivity.this);
+                if (isNetwork)
+                    signUp(v);
+                else
+                    Snackbar.make(v, "Network isn't available. Please enable network!", Snackbar.LENGTH_LONG)
+                            .setAction("ACTION", null)
+                            .show();
+
                 break;
             case R.id.btn_login_sign_up:
                 showLogin();

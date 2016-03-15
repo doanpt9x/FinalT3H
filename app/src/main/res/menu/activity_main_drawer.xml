@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_item_inbox"
+            android:icon="@drawable/ic_all_mail"
+            android:title="Inbox" />
+        <item
+            android:id="@+id/menu_item_primary"
+            android:icon="@drawable/ic_primary"
+            android:title="Primary" />
+
+        <item
+            android:id="@+id/menu_item_social"
+            android:icon="@drawable/ic_social"
+            android:title="Social" />
+        <item
+            android:id="@+id/menu_item_promotions"
+            android:icon="@drawable/ic_promotions"
+            android:title="Promotions" />
+
+    </group>
+
+    <item android:title="All Labels">
+        <menu>
+            <item
+                android:id="@+id/menu_item_starred"
+                android:icon="@drawable/ic_starred"
+                android:title="Starred" />
+            <item
+                android:id="@+id/menu_item_important"
+                android:icon="@drawable/ic_important"
+                android:title="Important" />
+            <item
+                android:id="@+id/menu_item_sent"
+                android:icon="@drawable/ic_sent"
+                android:title="Sent" />
+            <item
+                android:id="@+id/menu_item_spam"
+                android:icon="@drawable/ic_spam"
+                android:title="Spam" />
+            <item
+                android:id="@+id/menu_item_drafts"
+                android:icon="@drawable/ic_drafts"
+                android:title="Drafts" />
+        </menu>
+    </item>
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/menu_item_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
+        <item
+            android:id="@+id/menu_item_call_chat"
+            android:icon="@drawable/ic_call_messenger"
+            android:title="Chat And Call" />
+        <item
+            android:id="@+id/menu_item_change_account"
+            android:icon="@drawable/ic_account_convert"
+            android:title="Change Account" />
+
+    </group>
+
+</menu>

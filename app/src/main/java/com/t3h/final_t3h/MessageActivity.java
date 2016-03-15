@@ -172,71 +172,82 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         imgEmoticon = (ImageView) findViewById(R.id.imgEmoticon);
         imgEmoticon.setOnClickListener(this);
 
-        emoticonIds = new int[]{R.drawable.finch_1, R.drawable.finch_2, R.drawable.finch_3,
-                R.drawable.finch_4, R.drawable.finch_5, R.drawable.finch_6, R.drawable.finch_7,
-                R.drawable.finch_8, R.drawable.finch_9, R.drawable.finch_10, R.drawable.finch_11,
-                R.drawable.finch_12, R.drawable.finch_13, R.drawable.finch_14, R.drawable.finch_15,
-                R.drawable.finch_16};
-        ArrayList<EmoticonItem> emoticonItems0 = new ArrayList<EmoticonItem>();
-        for (int i = 0; i < emoticonIds.length; i++) {
-            emoticonItems0.add(new EmoticonItem(emoticonIds[i]));
-        }
-        emoticonAdapters[0] = new EmoticonAdapter(this, emoticonItems0, inComingMessageId, inComingFullName);
-
-        emoticonIds = new int[]{R.drawable.sallyfrien_1, R.drawable.sallyfrien_2, R.drawable.sallyfrien_3,
-                R.drawable.sallyfrien_4, R.drawable.sallyfrien_5, R.drawable.sallyfrien_6, R.drawable.sallyfrien_7,
-                R.drawable.sallyfrien_8, R.drawable.sallyfrien_9, R.drawable.sallyfrien_10, R.drawable.sallyfrien_11,
-                R.drawable.sallyfrien_12, R.drawable.sallyfrien_13, R.drawable.sallyfrien_14, R.drawable.sallyfrien_15,
-                R.drawable.sallyfrien_16, R.drawable.sallyfrien_17, R.drawable.sallyfrien_18, R.drawable.sallyfrien_19,
-                R.drawable.sallyfrien_20, R.drawable.sallyfrien_21, R.drawable.sallyfrien_22, R.drawable.sallyfrien_23,
-                R.drawable.sallyfrien_24, R.drawable.sallyfrien_25, R.drawable.sallyfrien_26, R.drawable.sallyfrien_27,
-                R.drawable.sallyfrien_28, R.drawable.sallyfrien_29, R.drawable.sallyfrien_30, R.drawable.sallyfrien_31,
-                R.drawable.sallyfrien_32, R.drawable.sallyfrien_33, R.drawable.sallyfrien_34, R.drawable.sallyfrien_35,
-                R.drawable.sallyfrien_36, R.drawable.sallyfrien_37, R.drawable.sallyfrien_38, R.drawable.sallyfrien_39,
-                R.drawable.sallyfrien_40};
-        ArrayList<EmoticonItem> emoticonItems1 = new ArrayList<EmoticonItem>();
-        for (int i = 0; i < emoticonIds.length; i++) {
-            emoticonItems1.add(new EmoticonItem(emoticonIds[i]));
-        }
-        emoticonAdapters[1] = new EmoticonAdapter(this, emoticonItems1, inComingMessageId, inComingFullName);
-
-        emoticonIds = new int[]{R.drawable.lcil_1, R.drawable.lcil_2, R.drawable.lcil_3,
-                R.drawable.lcil_4, R.drawable.lcil_5, R.drawable.lcil_6, R.drawable.lcil_7,
-                R.drawable.lcil_8, R.drawable.lcil_9, R.drawable.lcil_10, R.drawable.lcil_11,
-                R.drawable.lcil_12, R.drawable.lcil_13, R.drawable.lcil_14, R.drawable.lcil_15,
-                R.drawable.lcil_16, R.drawable.lcil_17, R.drawable.lcil_18, R.drawable.lcil_19,
-                R.drawable.lcil_20, R.drawable.lcil_21, R.drawable.lcil_22, R.drawable.lcil_23,
-                R.drawable.lcil_24, R.drawable.lcil_25, R.drawable.lcil_26, R.drawable.lcil_27,
-                R.drawable.lcil_28, R.drawable.lcil_29, R.drawable.lcil_30, R.drawable.lcil_31,
-                R.drawable.lcil_32, R.drawable.lcil_33, R.drawable.lcil_34, R.drawable.lcil_35,
-                R.drawable.lcil_36, R.drawable.lcil_37, R.drawable.lcil_38, R.drawable.lcil_39,
-                R.drawable.lcil_40};
-        ArrayList<EmoticonItem> emoticonItems2 = new ArrayList<EmoticonItem>();
-        for (int i = 0; i < emoticonIds.length; i++) {
-            emoticonItems2.add(new EmoticonItem(emoticonIds[i]));
-        }
-        emoticonAdapters[2] = new EmoticonAdapter(this, emoticonItems2, inComingMessageId, inComingFullName);
-
-        emoticonIds = new int[]{R.drawable.yaya_1, R.drawable.yaya_2, R.drawable.yaya_3,
-                R.drawable.yaya_4, R.drawable.yaya_5, R.drawable.yaya_6, R.drawable.yaya_7,
-                R.drawable.yaya_8, R.drawable.yaya_9, R.drawable.yaya_10, R.drawable.yaya_11,
-                R.drawable.yaya_12, R.drawable.yaya_13, R.drawable.yaya_14, R.drawable.yaya_15,
-                R.drawable.yaya_16, R.drawable.yaya_17, R.drawable.yaya_18, R.drawable.yaya_19,
-                R.drawable.yaya_20, R.drawable.yaya_21, R.drawable.yaya_22, R.drawable.yaya_23,
-                R.drawable.yaya_24, R.drawable.yaya_25, R.drawable.yaya_26, R.drawable.yaya_27,
-                R.drawable.yaya_28, R.drawable.yaya_29, R.drawable.yaya_30, R.drawable.yaya_31,
-                R.drawable.yaya_32};
+        emoticonIds = new int[]{R.drawable.chim1, R.drawable.chim2, R.drawable.chim3,
+                R.drawable.chim4, R.drawable.chim5, R.drawable.chim6, R.drawable.chim7,
+                R.drawable.chim8, R.drawable.chim8, R.drawable.chim9, R.drawable.chim10,
+                R.drawable.chim11, R.drawable.chim12, R.drawable.chim13, R.drawable.chim14,
+                R.drawable.chim15,R.drawable.chim16,R.drawable.chim17,R.drawable.chim18
+                ,R.drawable.chim19,R.drawable.chim20};
         ArrayList<EmoticonItem> emoticonItems3 = new ArrayList<EmoticonItem>();
         for (int i = 0; i < emoticonIds.length; i++) {
             emoticonItems3.add(new EmoticonItem(emoticonIds[i]));
         }
         emoticonAdapters[3] = new EmoticonAdapter(this, emoticonItems3, inComingMessageId, inComingFullName);
 
+        emoticonIds = new int[]{R.drawable.dog1, R.drawable.dog2, R.drawable.dog3,
+                R.drawable.dog4, R.drawable.dog5, R.drawable.dog6, R.drawable.dog7,
+                R.drawable.dog8, R.drawable.dog9, R.drawable.dog10, R.drawable.dog11,
+                R.drawable.dog12, R.drawable.dog13, R.drawable.dog14, R.drawable.dog15,
+                R.drawable.dog16, R.drawable.dog17, R.drawable.dog18, R.drawable.dog19,
+                R.drawable.dog20, R.drawable.dog21, R.drawable.dog22, R.drawable.dog23,
+                R.drawable.dog24, R.drawable.dog25, R.drawable.dog26, R.drawable.dog27,
+                R.drawable.dog28, R.drawable.dog29, R.drawable.dog30, R.drawable.dog31,
+                R.drawable.dog32, R.drawable.dog33, R.drawable.dog34, R.drawable.dog35,
+                R.drawable.dog36, R.drawable.dog37, R.drawable.dog38, R.drawable.dog39,
+                R.drawable.dog40};
+        ArrayList<EmoticonItem> emoticonItems4 = new ArrayList<EmoticonItem>();
+        for (int i = 0; i < emoticonIds.length; i++) {
+            emoticonItems4.add(new EmoticonItem(emoticonIds[i]));
+        }
+        emoticonAdapters[4] = new EmoticonAdapter(this, emoticonItems4, inComingMessageId, inComingFullName);
+
+        emoticonIds = new int[]{R.drawable.gil1, R.drawable.gil2, R.drawable.gil3,
+                R.drawable.gil4, R.drawable.gil5, R.drawable.gil6, R.drawable.gil7,
+                R.drawable.gil8, R.drawable.gil9, R.drawable.gil10, R.drawable.gil11,
+                R.drawable.gil12, R.drawable.gil13, R.drawable.gil14, R.drawable.gil15,
+                R.drawable.gil16, R.drawable.gil17, R.drawable.gil18, R.drawable.gil19,
+                R.drawable.gil20, R.drawable.gil21, R.drawable.gil22, R.drawable.gil23,
+                R.drawable.gil24, R.drawable.gil25, R.drawable.gil26, R.drawable.gil27,
+                R.drawable.gil28, R.drawable.gil29, R.drawable.gil30, R.drawable.gil31,
+                R.drawable.gil32, R.drawable.gil33, R.drawable.gil34, R.drawable.gil35,
+                R.drawable.gil36, R.drawable.gil37, R.drawable.gil38, R.drawable.gil39,
+                R.drawable.gil40};
+        ArrayList<EmoticonItem> emoticonItems2 = new ArrayList<EmoticonItem>();
+        for (int i = 0; i < emoticonIds.length; i++) {
+            emoticonItems2.add(new EmoticonItem(emoticonIds[i]));
+        }
+        emoticonAdapters[2] = new EmoticonAdapter(this, emoticonItems2, inComingMessageId, inComingFullName);
+
+        emoticonIds = new int[]{R.drawable.bi1, R.drawable.bi2, R.drawable.bi3,
+                R.drawable.bi4, R.drawable.bi5, R.drawable.bi6, R.drawable.bi7,
+                R.drawable.bi8, R.drawable.bi9, R.drawable.bi10, R.drawable.bi11,
+                R.drawable.bi12, R.drawable.bi13, R.drawable.bi14, R.drawable.bi15,
+                R.drawable.bi16, R.drawable.bi17, R.drawable.bi18, R.drawable.bi19,
+                R.drawable.bi20, R.drawable.bi21, R.drawable.bi22, R.drawable.bi23,
+                R.drawable.bi24, R.drawable.bi26, R.drawable.bi27, R.drawable.bi28,};
+        ArrayList<EmoticonItem> emoticonItems1 = new ArrayList<EmoticonItem>();
+        for (int i = 0; i < emoticonIds.length; i++) {
+            emoticonItems1.add(new EmoticonItem(emoticonIds[i]));
+        }
+        emoticonAdapters[1] = new EmoticonAdapter(this, emoticonItems1, inComingMessageId, inComingFullName);
+
+        emoticonIds = new int[]{R.drawable.rb1, R.drawable.rb2, R.drawable.rb3,
+                R.drawable.rb4, R.drawable.rb5, R.drawable.rb6, R.drawable.rb7,
+                R.drawable.rb8, R.drawable.rb9, R.drawable.rb10, R.drawable.rb11,
+                R.drawable.rb12, R.drawable.rb13, R.drawable.rb14, R.drawable.rb15,
+                R.drawable.rb16};
+        ArrayList<EmoticonItem> emoticonItems0 = new ArrayList<EmoticonItem>();
+        for (int i = 0; i < emoticonIds.length; i++) {
+            emoticonItems0.add(new EmoticonItem(emoticonIds[i]));
+        }
+        emoticonAdapters[0] = new EmoticonAdapter(this, emoticonItems0, inComingMessageId, inComingFullName);
+
         collectionEmoticonItems = new ArrayList<>();
         collectionEmoticonItems.add(new CollectionEmoticonItem(emoticonAdapters[0]));
         collectionEmoticonItems.add(new CollectionEmoticonItem(emoticonAdapters[1]));
         collectionEmoticonItems.add(new CollectionEmoticonItem(emoticonAdapters[2]));
         collectionEmoticonItems.add(new CollectionEmoticonItem(emoticonAdapters[3]));
+        collectionEmoticonItems.add(new CollectionEmoticonItem(emoticonAdapters[4]));
 
         collectionEmoticonAdapter = new CollectionEmoticonAdapter(this, collectionEmoticonItems);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -245,10 +256,11 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         tabs.setTabMode(TabLayout.MODE_FIXED);
-        tabs.getTabAt(0).setIcon(R.drawable.finch_1);
-        tabs.getTabAt(1).setIcon(R.drawable.sallyfrien_1);
-        tabs.getTabAt(2).setIcon(R.drawable.lcil_1);
-        tabs.getTabAt(3).setIcon(R.drawable.yaya_1);
+        tabs.getTabAt(3).setIcon(R.drawable.chim1);
+        tabs.getTabAt(4).setIcon(R.drawable.dog1);
+        tabs.getTabAt(2).setIcon(R.drawable.gil1);
+        tabs.getTabAt(1).setIcon(R.drawable.bi1);
+        tabs.getTabAt(0).setIcon(R.drawable.rb1);
     }
 
     private void getData() {

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:theme="@style/AppTheme"
     android:background="#ffffff">
 
     <android.support.design.widget.TextInputLayout
@@ -18,8 +19,8 @@
             android:layout_gravity="center"
             android:hint="Phone Number"
             android:inputType="phone"
-            android:textColor="@color/green_500"
-            android:textColorHint="@color/colorPrimary"
+            android:textColor="@color/textColorSecondary"
+            android:textColorHint="@color/textColorMessage"
             android:textSize="20sp" />
     </android.support.design.widget.TextInputLayout>
 

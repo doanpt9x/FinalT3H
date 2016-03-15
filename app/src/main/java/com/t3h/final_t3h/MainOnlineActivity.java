@@ -24,10 +24,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.view.GravityCompat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.GetCallback;
@@ -41,8 +43,11 @@ import com.t3h.call.CallLogActivity;
 import com.t3h.common.CommonValue;
 import com.t3h.common.GlobalApplication;
 import com.t3h.custom_view.CircleTextView;
+import com.t3h.mail.GmailMainActivity;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Android on 1/3/2016.
@@ -62,6 +67,8 @@ public class MainOnlineActivity extends AppCompatActivity implements NavigationV
     private BroadcastMain broadcastMain;
     private CallDBManager callDBManager;
     private static final int REQUEST_ADDITION_FRIEND = 0;
+    private CircleImageView imgAvatar;
+    private Bitmap avatar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +77,7 @@ public class MainOnlineActivity extends AppCompatActivity implements NavigationV
         initActionbar();
         //khởi tạo view()
         initView();
+        currentUser=ParseUser.getCurrentUser();
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.setCanceledOnTouchOutside(false);
@@ -82,7 +90,7 @@ public class MainOnlineActivity extends AppCompatActivity implements NavigationV
         }, 3000);
         this.startService();
         callDBManager = new CallDBManager(this);
-
+        this.initInfor();
     }
     private void startService() {
         Intent intentStartService = new Intent();
@@ -130,7 +138,43 @@ public class MainOnlineActivity extends AppCompatActivity implements NavigationV
 //        btnAction.setOnClickListener(this);
 
     }
+    private void initInfor() {
+        View view=navigation.inflateHeaderView(R.layout.layout_heard_nav);
+        imgAvatar= (CircleImageView) view.findViewById(R.id.img_avatar);
+        imgAvatar.setOnClickListener(this);
+        final TextView txtName = (TextView) view.findViewById(R.id.txtName);
+        final TextView txtEmail = (TextView) view.findViewById(R.id.txtEmail);
 
+        if (((GlobalApplication) getApplication()).getAvatar() != null) {
+            imgAvatar.setImageBitmap(((GlobalApplication) getApplication()).getAvatar());
+            txtName.setText(((GlobalApplication) getApplication()).getFullName());
+            txtEmail.setText(((GlobalApplication) getApplication()).getEmail());
+            return;
+        }
+
+        ParseFile parseFile = (ParseFile) currentUser.get("avatar");
+        if (parseFile != null) {
+            parseFile.getDataInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] bytes, ParseException e) {
+                    if (e == null) {
+                        String fullName = currentUser.getString("fullName");
+                        String email = currentUser.getEmail();
+
+                        avatar = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        imgAvatar.setImageBitmap(avatar);
+                        txtName.setText(fullName);
+                        txtEmail.setText(email);
+
+                        ((GlobalApplication) getApplication()).setAvatar(avatar);
+                        ((GlobalApplication) getApplication()).setFullName(fullName);
+                        ((GlobalApplication) getApplication()).setPhoneNumber(currentUser.getUsername());
+                        ((GlobalApplication) getApplication()).setEmail(email);
+                    }
+                }
+            });
+        }
+    }
     private void initActionbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         this.setSupportActionBar(toolbar);
@@ -158,45 +202,7 @@ public class MainOnlineActivity extends AppCompatActivity implements NavigationV
                 MainOnlineActivity.this.startActivity(intentCallLogs);
                 break;
             case R.id.nav_log_out:
-                final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-                alertDialog.setTitle("Confirm");
-                alertDialog.setMessage("Log out?");
-                alertDialog.setCanceledOnTouchOutside(false);
-                alertDialog.setCancelable(false);
-                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                alertDialog.dismiss();
-                            }
-                        });
-                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ParseUser parseUser = ParseUser.getCurrentUser();
-                                parseUser.put("isOnline", false);
-                                parseUser.saveInBackground();
-                                ParseUser.logOut();
-                                callDBManager.deleteAllData();
-                                callDBManager.closeDatabase();
-
-                                ((GlobalApplication) getApplication()).setAvatar(null);
-                                ((GlobalApplication) getApplication()).setFullName(null);
-                                ((GlobalApplication) getApplication()).setPhoneNumber(null);
-                                ((GlobalApplication) getApplication()).setEmail(null);
-                                ((GlobalApplication) getApplication()).setPictureSend(null);
-                                ((GlobalApplication) getApplication()).setAllFriendItems(null);
-
-                                Intent intentLogout = new Intent(CommonValue.ACTION_LOGOUT);
-                                MainOnlineActivity.this.sendBroadcast(intentLogout);
-                                Intent intent = new Intent(MainOnlineActivity.this, HomeOnlineActivity.class);
-                                alertDialog.dismiss();
-                                MainOnlineActivity.this.startActivity(intent);
-                                MainOnlineActivity.this.finish();
-                            }
-                        });
-                alertDialog.show();
+                confirmLogout();
                 break;
             case R.id.nav_about_us:
 //                Intent intentAboutUs = new Intent(this, AboutUsActivity.class);
@@ -216,12 +222,57 @@ public class MainOnlineActivity extends AppCompatActivity implements NavigationV
                 Toast.makeText(this,"Open setting Account",Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_mail:
+                Intent i = new Intent(MainOnlineActivity.this, GmailMainActivity.class);
+                startActivity(i);
                 Toast.makeText(this,"Open Mail",Toast.LENGTH_LONG).show();
                 break;
         }
         return true;
 
     }
+
+    private void confirmLogout() {
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle("Confirm");
+        alertDialog.setMessage("Log out?");
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setCancelable(false);
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ParseUser parseUser = ParseUser.getCurrentUser();
+                        parseUser.put("isOnline", false);
+                        parseUser.saveInBackground();
+                        ParseUser.logOut();
+                        callDBManager.deleteAllData();
+                        callDBManager.closeDatabase();
+
+                        ((GlobalApplication) getApplication()).setAvatar(null);
+                        ((GlobalApplication) getApplication()).setFullName(null);
+                        ((GlobalApplication) getApplication()).setPhoneNumber(null);
+                        ((GlobalApplication) getApplication()).setEmail(null);
+                        ((GlobalApplication) getApplication()).setPictureSend(null);
+                        ((GlobalApplication) getApplication()).setAllFriendItems(null);
+
+                        Intent intentLogout = new Intent(CommonValue.ACTION_LOGOUT);
+                        MainOnlineActivity.this.sendBroadcast(intentLogout);
+                        Intent intent = new Intent(MainOnlineActivity.this, HomeOnlineActivity.class);
+                        alertDialog.dismiss();
+                        MainOnlineActivity.this.startActivity(intent);
+                        MainOnlineActivity.this.finish();
+                    }
+                });
+        alertDialog.show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -241,14 +292,29 @@ public class MainOnlineActivity extends AppCompatActivity implements NavigationV
         }
         return super.onOptionsItemSelected(item);
     }
+    boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
-        //nếu menu đang mở thì đóng. còn k thì backpressed
         if (drawerLayout.isDrawerOpen(Gravity.START)) {
             drawerLayout.closeDrawers();
             return;
         }
-        super.onBackPressed();
+
+        if (doubleBackToExitPressedOnce) {
+            confirmLogout();
+            //super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
     @Override
     protected void onDestroy() {
@@ -373,7 +439,7 @@ public class MainOnlineActivity extends AppCompatActivity implements NavigationV
     private class BroadcastMain extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-//          img.setImageBitmap(((GlobalApplication) getApplication()).getAvatar());
+          imgAvatar.setImageBitmap(((GlobalApplication) getApplication()).getAvatar());
         }
     }
 

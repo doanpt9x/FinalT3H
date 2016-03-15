@@ -57,8 +57,6 @@ public class FriendFragment extends Fragment implements View.OnClickListener, On
     private ArrayList<ContactItem> contactItems;
     private BroadcastUpdateListFriend broadcastUpdateListFriend = new BroadcastUpdateListFriend();
     private Context context;
-    private CircleImageView imgAvatar;
-    private TextView txtFullName, txtStatus;
     private SwipeRefreshLayout swipeRefreshLayout;
     private View view;
 
@@ -68,15 +66,20 @@ public class FriendFragment extends Fragment implements View.OnClickListener, On
         this.initializeComponent();
     }
 
+    public FriendFragment() {
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        registerUpdateListFriend();
-        context = this.getActivity();
-        this.onRefresh();
+        this.registerUpdateListFriend();
+        this.context = this.getActivity();
         friendAdapter = new FriendAdapter(this.getActivity(), this.getActivity());
         friendAdapter.setOnShowPopupMenu(this);
+        this.changeStateShow(btnTabAllFriends);
+        this.changeStateHide(btnTabInvite);
         listViewFriend.setAdapter(friendAdapter);
+        listViewFriend.setVisibility(View.VISIBLE);
     }
 
     public void registerUpdateListFriend() {
@@ -88,15 +91,8 @@ public class FriendFragment extends Fragment implements View.OnClickListener, On
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        this.initializeProfile();
         return view;
     }
-//    private void initializeProfile() {
-//        imgAvatar = (CircleImageView) view.findViewById(R.id.imgAvatar);
-////        imgAvatar.setImageBitmap(((GlobalApplication) this.getActivity().getApplication()).getAvatar());
-////        txtFullName = (TextView) view.findViewById(R.id.txtFullName);
-////        txtFullName.setText(((GlobalApplication) this.getActivity().getApplication()).getFullName());
-//    }
 
     private void initializeComponent() {
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
@@ -111,7 +107,6 @@ public class FriendFragment extends Fragment implements View.OnClickListener, On
         btnTabInvite.setOnClickListener(this);
         btnTabAllFriends = (TextView) view.findViewById(R.id.btnTabAllFriends);
         btnTabAllFriends.setOnClickListener(this);
-
         listViewFriend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -124,6 +119,12 @@ public class FriendFragment extends Fragment implements View.OnClickListener, On
                 context.startActivity(intentChat);
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        this.onRefresh();
     }
 
     @Override
@@ -160,7 +161,6 @@ public class FriendFragment extends Fragment implements View.OnClickListener, On
     @Override
     public void onRefresh() {
         ParseUser currentUser = ParseUser.getCurrentUser();
-
         GlobalApplication globalApplication=(GlobalApplication)this.getActivity().getApplication();
         globalApplication.setAllFriendItems(CommonMethod.getInstance().loadListFriend(currentUser, this.getActivity()));
         final ProgressDialog progressDialog = new ProgressDialog(this.getActivity());
@@ -199,7 +199,7 @@ public class FriendFragment extends Fragment implements View.OnClickListener, On
                 inComingFullName=friendAdapter.getItem(position).getFullName();
                 switch (item.getItemId()) {
                     case R.id.action_open_chat:
-                        Toast.makeText(context, "Open Chat", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context, "Open Chat", Toast.LENGTH_LONG).show();
                         Intent intentChat = new Intent(getActivity(), MessageActivity.class);
                         intentChat.putExtra(CommonValue.INCOMING_CALL_ID, inComingId);
                         intentChat.putExtra(CommonValue.INCOMING_MESSAGE_FULL_NAME, inComingFullName);
@@ -207,14 +207,14 @@ public class FriendFragment extends Fragment implements View.OnClickListener, On
                         break;
                     case R.id.action_voice_call:
                         //open activity call
-                        Toast.makeText(context, "Open Call", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context, "Open Call", Toast.LENGTH_LONG).show();
                         Intent intentCall = new Intent(getActivity(), OutgoingCallActivity.class);
                         intentCall.putExtra(CommonValue.INCOMING_CALL_ID, inComingId);
                         FriendFragment.this.getActivity().startActivity(intentCall);
                         break;
                     case R.id.action_view_profile:
                         //open activity profile
-                        Toast.makeText(context, "Open Profile", Toast.LENGTH_LONG).show();
+  //                      Toast.makeText(context, "Open Profile", Toast.LENGTH_LONG).show();
                         Intent intentProfile = new Intent(getActivity(), DetailActivity.class);
                         intentProfile.putExtra(CommonValue.USER_ID, inComingId);
                         FriendFragment.this.getActivity().startActivity(intentProfile);

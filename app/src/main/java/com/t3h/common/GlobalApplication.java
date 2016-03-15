@@ -3,10 +3,13 @@ package com.t3h.common;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.multidex.MultiDex;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
 
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.services.gmail.Gmail;
 import com.parse.Parse;
 import com.t3h.final_t3h.AllFriendItem;
 
@@ -25,11 +28,16 @@ public class GlobalApplication extends Application {
     private ArrayList<AllFriendItem> allFriendItems;
 
     private ArrayList<String> idUsers;
+    //biến để kiểm tra login thì đồng bộ database
     volatile public static boolean checkLoginThisId = false;
+    //để đồng bộ khi gửi tin nhắn và incomingcall
     volatile public static boolean startActivityMessage = false;
+    //biến để đồng khi đăng nhập lần đầu
     volatile public static boolean startWaitingMMC = false;
     private SharedPreferencesApp shareperference;
     public static float DENSITY_DPI;
+    private GoogleAccountCredential mCredential;
+    private Gmail mService = null;
 
     @Override
     public void onCreate() {
@@ -43,7 +51,11 @@ public class GlobalApplication extends Application {
         allFriendItems = new ArrayList<>();
 
     }
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
     private void initializeComponent() {
         WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();
@@ -52,6 +64,23 @@ public class GlobalApplication extends Application {
         HEIGHT_SCREEN = metrics.heightPixels;
         DENSITY_DPI = metrics.densityDpi;
     }
+    public GoogleAccountCredential getmCredential() {
+        return mCredential;
+    }
+
+    public void setmCredential(GoogleAccountCredential mCredential) {
+        this.mCredential = mCredential;
+    }
+
+    public Gmail getmService() {
+        return mService;
+    }
+
+    public void setmService(Gmail mService) {
+        this.mService = mService;
+    }
+
+
 
     public Bitmap getAvatar() {
         return avatar;
